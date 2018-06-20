@@ -1,0 +1,13 @@
+[
+    {
+        "description": "Application download URL. ",
+        "hidden": false,
+        "immutable": false,
+        "label": "Application download URL",
+        "name": "app_download_url",
+        "default": "",
+        "required": true,
+        "secured": false,
+        "type": "string"
+    }
+]
