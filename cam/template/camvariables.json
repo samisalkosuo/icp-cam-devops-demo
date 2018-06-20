@@ -9,5 +9,29 @@
         "required": true,
         "secured": false,
         "type": "string"
+    },
+    {
+        "description": "Your AWS Access Key",
+        "hidden": false,
+        "immutable": false,
+        "label": "AWS Access Key",
+        "name": "aws_access_key",
+        "default": "",
+        "required": true,
+        "secured": false,
+        "type": "string"
+    },
+    {
+        "description": "Your AWS Secret Access Key",
+        "hidden": false,
+        "immutable": false,
+        "label": "AWS Secret Access Key",
+        "name": "aws_secret_key",
+        "default": "",
+        "required": true,
+        "secured": false,
+        "type": "string"
     }
+    
+    
 ]
