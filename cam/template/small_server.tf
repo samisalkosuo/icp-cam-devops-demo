@@ -28,12 +28,12 @@ variable app_download_url {
 
 #AWS variables
 variable aws_access_key {
-  description = "AWS access key."
+  #description = "AWS access key."
   #default     = "ADD YOUR AWS ACCESS KEY HERE"
 }
 
 variable aws_secret_key {
-  description = "AWS secret key."
+  #description = "AWS secret key."
   #default     = "ADD YOUR AWS ACCESS SECRET KEY HERE"
 }
 
