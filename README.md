@@ -63,17 +63,35 @@ Starting from scratch, installing the demo environment is an effort. But outcome
    - https://jenkins.io/doc/book/installing/
    - Assumption here is that Jenkins is installed natively (no Docker container).
    - Jenkins uses host OS to build application (using Docker, IBM Cloud CLI, kubectl, etc).
+1. Install file server:
+   - File server exists so that AWS instance can download the application Docker image.
+   - This will be replaced by IBM Object Storage in the future.
+   - [Quick and easy file server](https://hub.docker.com/r/halverneus/static-file-server/)
+   - Go to directory that you want to share, then execute:
+     - ```docker run -d -v $(pwd):/web -p 8088:8080 halverneus/static-file-server:latest```
 1. In addition to the components above, you need AWS EC2 account and Slack account.
 
-Not the basic components are installed: IBM Cloud Private, IBM Cloud Automation Manager and Jenkins. The next step is to configure the environment.
+
+Now the basic components are installed: IBM Cloud Private, IBM Cloud Automation Manager and Jenkins. The next step is to configure the environment.
 
 ## Configure the demo environment
 
+Configuration includes setting up all the components so that automatic deploment happens when developer commits code. 
+
+### Cloud Automation Manager
 
 1. Configure CAM:
    - [Connect to AWS cloud](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.2/cam_managing_connections.html)
    - You need AWS access key ID and secret access key.
-1. Configure Jenkins:
+1. Create CAM template:
+   - [cam/template](cam/template) includes the template to provision single AWS image.
+   - [Documentation](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.2/cam_creating_template.html) includes steps to create template. It is pretty straight-forward task.
+   - 
+
+
+### Jenkins
+
+Configure Jenkins:
    - Blue Ocean plugins
    - install Slack plugin
    - env variables
