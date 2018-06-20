@@ -1,0 +1,15 @@
+[master]
+MASTER_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
+
+[worker]
+WORKER_1_IP
+WORKER_2_IP
+
+[proxy]
+PROXY_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
+
+[management]
+MGMT_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
+
+[va]
+VA_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
