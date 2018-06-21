@@ -1,0 +1,70 @@
+{
+    "service": {
+      "specVersion": "v2",
+      "catalog_metadata": {
+        "name": "Daytrader@Frankfurt",
+        "description": "Daytrader app at Frankfurt AWS",
+        "longDescription": "",
+        "providerDisplayName": "",
+        "image": "serviceicon_1.svg",
+        "category": "AWS Dev env",
+        "bullets": [
+          {
+            "title": "Cloud Provider",
+            "description": "AWS Frankfurt"
+          }
+        ],
+        "author": "admin"
+      },
+      "tags": [],
+      "parameters": [
+        {
+          "name": "app_download_url",
+          "label": "App Download URL",
+          "customtype": "string",
+          "type": "string",
+          "immutable": false,
+          "hidden": false,
+          "required": false,
+          "secured": false
+        }
+      ],
+      "flow": {
+        "conditions": [],
+        "templates": [
+          {
+            "Daytrader AWS": {
+              "title": "Daytrader AWS",
+              "template_name": "Daytrader AWS",
+              "version": "develop",
+              "id": "daytrade4913dc32",
+              "template_type": "Terraform",
+              "template_content_type": "Amazon EC2",
+              "template_provider": "Amazon EC2",
+              "instance_name": "",
+              "cloud_connection_name": "AWS_Frankfurt",
+              "template_data_objects": {},
+              "template_params": {
+                "app_download_url": "${parameters.app_download_url}",
+                "aws_access_key": "ADD YOUR AWS ACCESS KEY HERE",
+                "aws_secret_key": "ADD YOUR AWS SECRET ACCESS KEY HERE"
+              },
+              "outputs": []
+            }
+          }
+        ],
+        "resthooks": [],
+        "notifications": [],
+        "sequence": {
+          "0": "daytrade4913dc32"
+        }
+      },
+      "plans": [
+        {
+          "name": "Standard",
+          "description": "To deploy a Standard plan",
+          "plan_parameters": []
+        }
+      ]
+    }
+  }
