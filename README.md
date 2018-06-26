@@ -16,9 +16,9 @@ Demo servers are Ubuntu/CentOS Linux servers. total of 8 servers, and they are:
 
 - ICP boot node, including:
   - Jenkins
-  - File server
+  - File server (to be replaced by IBM Object Storage)
   - Database
-  - in real life, all of these would be separate servers but for demo purposes this is fine
+  - in real life, all of these would be separate servers but for demo purposes, this is fine
 - NFS server
   - separate NFS server for ICP and CAM
 - 6 server for ICP
