@@ -12,7 +12,7 @@ The guiding lights of this demo are:
 
 Assumption is that demo setup is created from scratch using Linux servers. 
 
-Demo servers are Ubuntu Linux servers. total of 8 servers, and they are:
+Demo servers are Ubuntu/CentOS Linux servers. total of 8 servers, and they are:
 
 - ICP boot node, including:
   - Jenkins
@@ -65,7 +65,7 @@ Starting from scratch, installing the demo environment is an effort. But outcome
 1. Install Jenkins:
    - https://jenkins.io/doc/book/installing/
    - Assumption here is that Jenkins is installed natively (no Docker container).
-   - Jenkins uses host OS to build application (using Docker, IBM Cloud CLI, kubectl, etc).
+   - Jenkins uses host OS to build application (using Docker, IBM Cloud CLI, kubectl, etc that is installed in host OS and available for jenkins-user).
    - Add jenkins-user to Docker users:
      - ```usermod -aG docker jenkins```
      - Restart jenkins: ```systemctl stop jenkins && systemctl start jenkins```
@@ -82,7 +82,6 @@ Starting from scratch, installing the demo environment is an effort. But outcome
    - AWS EC2 account
    - Slack account
    - GitHub account
-
 
 Now the basic components are installed: IBM Cloud Private, IBM Cloud Automation Manager and Jenkins. The next step is to configure the environment.
 
@@ -106,7 +105,7 @@ The sample application includes Jenkinsfile, Dockerfile and other configuration 
    - Demo template is in this repository [cam/template](cam/template). It provisions single AWS image and downloads and installs application Docker image.   
    - When deploying the template, AWS key and AWS secret key are required, as well as URL to download application Docker image.
 1. Create CAM service:
-   - CAM service can include many templates, in this context, only the template created in previous step is used.
+   - CAM service can include many templates but, in this context, only the template created in previous step is used.
    -  [Documentation](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.2/cam_managing_services.html) includes steps to create service. 
      - [Sample service JSON file](cam/service/daytrader_at_frankfurt.json)
    - You must use service name: *Daytrader@Frankfurt*
@@ -129,7 +128,7 @@ You may test template and service from CAM UI.
      - Because this is hardcoded in Daytrader Jenkins build :-)
 1. Add following global environment variables to Jenkins:
    - ICP_URL - URL to ICP admin console (like https://server.ip:8843).
-   - CAM_URL - CAM URL. Default like https://proxy.server.ip:30000.
+   - CAM_URL - CAM URL. Default URL is like https://proxy.server.ip:30000.
    - ICP_PROXY_IP - ICP proxy node IP address.
    - CAM_USER - admin user name for both CAM and ICP (default is typically 'admin')
    - CAM_PASSWORD - password for CAM and ICP (assumes that admin-user can access both)
