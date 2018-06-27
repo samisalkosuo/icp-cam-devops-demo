@@ -1,16 +1,13 @@
 #!/bin/bash
 
-#install app
-
-__app_download_url=$1
-
+#download docker container
+__app_download_url="$1"
 echo "Downloading Docker image from URL: " ${__app_download_url}
-
-wget ${__app_download_url}
-
-#get filename, sed removes any request params
 filename=$(basename ${__app_download_url} | sed s/[?].*$//g)
+echo "Filename: $filename"
+wget -O $filename ${__app_download_url}
 
+#load docker container
 sudo docker load -i ${filename}
 
 echo "Starting Docker container"

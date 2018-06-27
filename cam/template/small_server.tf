@@ -217,7 +217,7 @@ resource "aws_instance" "orpheus_ubuntu_micro" {
   provisioner "remote-exec" {
     inline = [
       "bash install_docker.sh",
-      "bash install_app.sh ${var.app_download_url}",
+      "bash install_app.sh \"${var.app_download_url}\"",
     ]
   }
 
