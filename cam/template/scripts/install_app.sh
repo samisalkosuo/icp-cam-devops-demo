@@ -8,7 +8,8 @@ echo "Downloading Docker image from URL: " ${__app_download_url}
 
 wget ${__app_download_url}
 
-filename=$(basename ${__app_download_url})
+#get filename, sed removes any request params
+filename=$(basename ${__app_download_url} | sed s/[?].*$//g)
 
 sudo docker load -i ${filename}
 
