@@ -36,7 +36,7 @@
             "Daytrader AWS": {
               "title": "Daytrader AWS",
               "template_name": "Daytrader AWS",
-              "version": "develop",
+              "version": "0.2",
               "id": "daytrade4913dc32",
               "template_type": "Terraform",
               "template_content_type": "Amazon EC2",
