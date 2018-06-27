@@ -16,7 +16,6 @@ Demo servers are Ubuntu/CentOS Linux servers. total of 8 servers, and they are:
 
 - ICP boot node, including:
   - Jenkins
-  - File server (to be replaced by IBM Object Storage)
   - Database
   - in real life, all of these would be separate servers but for demo purposes, this is fine
 - NFS server
@@ -29,7 +28,12 @@ Demo servers are Ubuntu/CentOS Linux servers. total of 8 servers, and they are:
   - 16GB RAM
   - 100GB disk
 
- 
+In addition to servers, the following services are used:
+- IBM Cloud - IBM Cloud Object Storage
+- AWS EC2
+- GitHub
+- Slack
+
 ## Install the demo environment
 
 Starting from scratch, installing the demo environment is an effort. But outcome will be well worth the effort :-)
@@ -72,16 +76,13 @@ Starting from scratch, installing the demo environment is an effort. But outcome
    - Install ICP CLI plugin for jenkins-user:
      - Login as jenkins-user
      - [Install ICP plugin](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0.3/manage_cluster/install_cli.html).
-1. Install file server:
-   - File server exists so that AWS instance can download the application Docker image.
-   - This will be replaced by IBM Object Storage in the future.
-   - [Quick and easy file server](https://hub.docker.com/r/halverneus/static-file-server/)
-   - Go to directory that you want to share, then execute:
-     - ```docker run -d -v $(pwd):/web -p 8088:8080 halverneus/static-file-server:latest```
 1. In addition to the components above, you need: 
-   - AWS EC2 account
-   - Slack account
-   - GitHub account
+   - AWS account and AWS access key and secret key.
+   - Slack account to create new channel
+   - GitHub account to fork existing repository.
+   - IBM Cloud account to store binaries in Cloud Object Storage.
+     - IBM Cloud API key is needed.
+     - **Note**: Jenkins-build creates automatically IBM Cloud Object Storage service using Lite-plan. If you already have Cloud Object Storage service Jenkins build will fail.
 
 Now the basic components are installed: IBM Cloud Private, IBM Cloud Automation Manager and Jenkins. The next step is to configure the environment.
 
@@ -133,10 +134,7 @@ You may test template and service from CAM UI.
    - CAM_USER - admin user name for both CAM and ICP (default is typically 'admin')
    - CAM_PASSWORD - password for CAM and ICP (assumes that admin-user can access both)
    - DAYTRADER_DB_IP - IP address where Daytrader external database is running. Must be accessible from ICP worker nodes.
-   - FILE_SERVER_PATH - Full path to HTTP file server directory (for example: /http_files/)
-   - HTTP_FILE_SERVER - File server URL and port. For example: http://file.server.ip:8088.
-1. Change file server path owner to jenkins:
-   - ```chown jenkins:jenkins /http_files/```
+   - IBMCLOUD_API_KEY - [IBM Cloud API key](https://console.bluemix.net/iam/#/apikeys) to login to IBM Cloud from CLI.
 1. Open Blue Ocean and create a new pipeline from GitHub repository:
    - [Sample steps are described here](https://jenkins.io/doc/tutorials/create-a-pipeline-in-blue-ocean/#create-your-pipeline-project-in-blue-ocean)
    - When you've created the pipeline, build processes start for both develop and master branches.
