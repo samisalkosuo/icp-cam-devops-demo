@@ -3,14 +3,27 @@
 #create CAM volumes using kubectl
 #https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.2/cam_create_pv.html
 
-__nfs_server_ip=NFS_IP_HERE
+__nfs_server_ip=$1
+if [[ "${__nfs_server_ip}" == "" ]] ; then
+    echo "NFS server IP not specified."
+    echo "Usage $0 <nfs_server_ip> <nfs_dir> <have you create directories>"
+    exit 1
+fi 
 
 #create directory to NFS server shared directory
-__nfs_dir=/NFS_DIR_HERE
-#mkdir -p ${__nfs_dir}/CAM_db
-#mkdir -p ${__nfs_dir}/CAM_logs
-#mkdir -p ${__nfs_dir}/CAM_terraform
-#mkdir -p ${__nfs_dir}/CAM_BPD_appdata
+__nfs_dir=$2
+if [[ "${__nfs_dir}" == "" ]] ; then
+    echo "NFS root directory not specified."
+    echo "Usage $0 <nfs_server_ip> <nfs_dir> <have you create directories>"
+    exit 1
+fi 
+
+__confirmation=$3
+if [[ "${__confirmation}" == "" ]] ; then
+    echo "Have you created directories in NFS server="
+    echo "Usage $0 <nfs_server_ip> <nfs_dir> <have you create directories>"
+    exit 1
+fi 
 
 
 #change occurrences of string in file

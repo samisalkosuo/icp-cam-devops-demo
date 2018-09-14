@@ -25,6 +25,12 @@
   - mycluster is default clustern name
   - alternatively use ICP UI to get kubectl config commands
 
+- Check what pods are not running in kube-system namespace:
+  ```kubectl get pods -n kube-system |grep -v Running```
+
+- Delete all non-running pods from kube-system namespace:
+  ```kubectl get pods -n kube-system |grep -v Running | awk '{print "kubectl delete pod " $1 " -n kube-system"}'```
+
   
 
 

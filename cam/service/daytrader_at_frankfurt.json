@@ -7,7 +7,6 @@
         "longDescription": "",
         "providerDisplayName": "",
         "image": "serviceicon_1.svg",
-        "category": "AWS Dev env",
         "bullets": [
           {
             "title": "Cloud Provider",
@@ -35,14 +34,14 @@
           {
             "Daytrader AWS": {
               "title": "Daytrader AWS",
-              "template_name": "Daytrader AWS",
-              "version": "0.4",
+              "template_name": "DaytraderAWS",
+              "version": "master",
               "id": "daytrade4913dc32",
               "template_type": "Terraform",
               "template_content_type": "Amazon EC2",
               "template_provider": "Amazon EC2",
               "instance_name": "",
-              "cloud_connection_name": "AWS_Frankfurt",
+              "cloud_connection_name": "AWSFrankfurt",
               "template_data_objects": {},
               "template_params": {
                 "app_download_url": "${parameters.app_download_url}",
