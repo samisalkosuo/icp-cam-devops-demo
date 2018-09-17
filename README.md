@@ -99,12 +99,8 @@ Starting from scratch, installing the demo environment is an effort. But outcome
    - https://jenkins.io/doc/book/installing/
    - Assumption here is that Jenkins is installed natively (no Docker container).
    - Jenkins uses host OS to build application (using Docker, IBM Cloud CLI, kubectl, etc that is installed in host OS and available for jenkins-user).
-   - Add jenkins-user to Docker users:
-     - ```usermod -aG docker jenkins```
-     - Restart jenkins: ```systemctl stop jenkins && systemctl start jenkins```
-   - Install ICP CLI plugin for jenkins-user:
-     - Login as jenkins-user
-     - [Install ICP plugin](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0.3/manage_cluster/install_cli.html).
+   - Sample script to install: [jenkins_install.sh](scripts/jenkins_install.sh)
+     - Scripts adds jenkins-user to Docker users, restarts Jenkins and installs ICP CLI plugin for jenkins-user.
 
 1. In addition to the components above, you need: 
    - AWS account and AWS access key and secret key.
@@ -165,8 +161,9 @@ You may test template and service from CAM UI. You need to have application URL.
 1. [Install Blue Ocean plugins](https://jenkins.io/doc/book/blueocean/getting-started/).
 1. Configure Slack:
    - [Follow these instructions](https://github.com/jenkinsci/slack-plugin).
-   - Use slack channel name: *#deployments*
-     - Because this is hardcoded in Daytrader Jenkins build :-)
+   - Use slack channel name: *#deployments*   
+     - Because this is hardcoded in Daytrader Jenkins build :-)     
+   - When testing connection and you get client error, check this script: [jenkins_configure_certs.sh](scripts/jenkins_configure_certs.sh)
 1. Add following global environment variables to Jenkins:
    - ICP_URL - URL to ICP admin console (like https://server.ip:8843).
    - CAM_URL - CAM URL. Default URL is like https://proxy.server.ip:30000.
