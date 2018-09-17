@@ -6,7 +6,9 @@ The application used in this demo environment is [Daytrader, a JEE7 application]
 
 The guiding lights of this demo are:
   - when developer commits to develop-branch --> automatic deployment to AWS.
+    <img src="images/icp_cam_demo_dev.png" alt="dev_aws" width="500"/>
   - when developer commits to master-branch --> automatic deployment to ICP.
+    <img src="images/icp_cam_demo_prod.png" alt="prod_icp" width="500"/>
 
 Both IBM Cloud Private (ICP) and IBM Cloud Automation Manager (CAM) used in this demo are publicly available Community Editions. When using licensed versions of ICP and CAM, their installations are a bit different but otherwise same steps apply. 
 
