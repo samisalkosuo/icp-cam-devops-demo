@@ -70,6 +70,7 @@
         {
           "name": "Standard",
           "description": "To deploy a Standard plan",
+          "actions": [],
           "plan_parameters": []
         }
       ]
