@@ -1,6 +1,6 @@
 {
     "service": {
-      "specVersion": "v2",
+      "specVersion": "v3",
       "catalog_metadata": {
         "name": "DaytraderAtFrankfurt",
         "description": "Daytrader app at Frankfurt AWS",
