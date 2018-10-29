@@ -16,48 +16,55 @@
         "author": "admin"
       },
       "tags": [],
-      "parameters": [
-        {
-          "name": "app_download_url",
-          "label": "App Download URL",
-          "customtype": "string",
-          "type": "string",
-          "immutable": false,
-          "hidden": false,
-          "required": false,
-          "secured": false
-        }
-      ],
-      "flow": {
-        "conditions": [],
-        "templates": [
+      "actions": [
+      {
+        "type": "provision",
+        "name": "Provision",
+        "description": "Default action for deployment of service",
+        "input_parameters": [
           {
-            "Daytrader AWS": {
-              "title": "Daytrader AWS",
-              "template_name": "DaytraderAWS",
-              "version": "master",
-              "id": "daytrade4913dc32",
-              "template_type": "Terraform",
-              "template_content_type": "Amazon EC2",
-              "template_provider": "Amazon EC2",
-              "instance_name": "",
-              "cloud_connection_name": "AWSFrankfurt",
-              "template_data_objects": {},
-              "template_params": {
-                "app_download_url": "${parameters.app_download_url}",
-                "aws_access_key": "ADD YOUR AWS ACCESS KEY HERE",
-                "aws_secret_key": "ADD YOUR AWS SECRET ACCESS KEY HERE"
-              },
-              "outputs": []
+            "name": "app_download_url",
+            "label": "App Download URL",
+            "customtype": "string",
+            "type": "string",
+            "immutable": false,
+            "hidden": false,
+            "required": false,
+            "secured": false
+            }
+        ],
+        "flow": {
+          "conditions": [],
+          "templates": [
+            {
+              "Daytrader AWS": {
+                "title": "Daytrader AWS",
+                  "template_name": "DaytraderAWS",
+                  "version": "master",
+                  "id": "daytrade4913dc32",
+                  "template_type": "Terraform",
+                  "template_content_type": "Amazon EC2",
+                  "template_provider": "Amazon EC2",
+                  "instance_name": "",
+                  "cloud_connection_name": "AWSFrankfurt",
+                  "template_data_objects": {},
+                  "template_params": {
+                    "app_download_url": "${parameters.app_download_url}",
+                    "aws_access_key": "ADD YOUR AWS ACCESS KEY HERE",
+                    "aws_secret_key": "ADD YOUR AWS SECRET ACCESS KEY HERE"
+                  },
+                  "outputs": []
+                }
+              }
+            ],
+            "resthooks": [],
+            "notifications": [],
+            "sequence": {
+              "0": "daytrade4913dc32"
             }
           }
-        ],
-        "resthooks": [],
-        "notifications": [],
-        "sequence": {
-          "0": "daytrade4913dc32"
         }
-      },
+      ],
       "plans": [
         {
           "name": "Standard",
