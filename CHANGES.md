@@ -1,3 +1,7 @@
+## 0.6
+
+- Updated scripts, CAM service, etc. to ICP 3.1.0.
+
 ## 0.5
 
 - Added overview images.

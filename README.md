@@ -12,7 +12,9 @@ The guiding lights of this demo are:
 
 Both IBM Cloud Private (ICP) and IBM Cloud Automation Manager (CAM) used in this demo are publicly available Community Editions. When using licensed versions of ICP and CAM, their installations are a bit different but otherwise same steps apply. 
 
-ICP version is 2.1.0.3.
+The steps below are written using ICP version is 2.1.0.3. Steps for ICP 3.1.0 should be the same but not yet tested. 
+
+Scripts, service and other files are updated for ICP/CAM 3.1.0. 
 
 ## Setup
 
@@ -86,7 +88,7 @@ Starting from scratch, installing the demo environment is an effort. But outcome
    - Login to ICP. [icp_login.sh](scripts/icp_login.sh).
    - Create Persistent Volumes:
      - Sample script: [create_cam_volumes.sh][cam/storage/create_cam_volumes.sh].
-   - [Install CAM-CE]((https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.3/cam_installing_CE_main.html).
+   - [Install CAM-CE](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.3/cam_installing_CE_main.html).
      - Please follow instructions.
      
 1. Install external database for Daytrader:
@@ -145,7 +147,7 @@ The sample application includes Jenkinsfile, Dockerfile and other configuration 
 1. Create CAM service:
    - CAM service can include many templates but, in this context, only the template created in previous step is used.
    -  [Documentation](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.3/cam_managing_services.html) includes steps to create service. 
-   - You must use service name: ```Daytrader@Frankfurt```
+   - You must use service name: ```DaytraderAtFrankfurt```
      - Because this is hardcoded in Daytrader Jenkins build :-)
    - Import [service JSON file](cam/service/daytrader_at_frankfurt.json) as source.
    - Add service parameter:
