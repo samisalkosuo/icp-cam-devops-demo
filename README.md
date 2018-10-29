@@ -10,7 +10,7 @@ The guiding lights of this demo are:
   - when developer commits to master-branch --> automatic deployment to ICP.
     <img src="images/icp_cam_demo_prod.png" alt="prod_icp" width="500"/>
 
-Both IBM Cloud Private (ICP) and IBM Cloud Automation Manager (CAM) used in this demo are publicly available Community Editions. When using licensed versions of ICP and CAM, their installations are a bit different but otherwise same steps apply. 
+Both IBM Cloud Private (ICP) and IBM Cloud Automation Manager (CAM) used in this demo are publicly available Community Editions. When using licensed versions of ICP and CAM, their deployment is a bit different but mostly the same steps apply. 
 
 The steps below are written using ICP version is 2.1.0.3. Steps for ICP 3.1.0 should be the same but not yet tested. 
 
