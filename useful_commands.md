@@ -31,6 +31,8 @@
 - Delete all non-running pods from kube-system namespace:
   ```kubectl get pods -n kube-system |grep -v Running | awk '{print "kubectl delete pod " $1 " -n kube-system"}'```
 
+- Delete all auth-pods:
+  ```kubectl get pods -n kube-system |grep auth | awk '{print "kubectl delete pod " $1 " -n kube-system"}' | sh```
   
 
 
