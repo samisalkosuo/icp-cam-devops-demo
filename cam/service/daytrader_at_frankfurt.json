@@ -2,7 +2,7 @@
     "service": {
       "specVersion": "v2",
       "catalog_metadata": {
-        "name": "Daytrader@Frankfurt",
+        "name": "DaytraderAtFrankfurt",
         "description": "Daytrader app at Frankfurt AWS",
         "longDescription": "",
         "providerDisplayName": "",
