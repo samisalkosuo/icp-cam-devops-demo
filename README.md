@@ -176,8 +176,8 @@ You may test template and service from CAM UI. You need to have application URL.
    - CAM_PASSWORD - password for CAM and ICP (assumes that admin-user can access both)
    - DAYTRADER_DB_IP - IP address where Daytrader external database is running. Must be accessible from ICP worker nodes.
    - IBMCLOUD_API_KEY - [IBM Cloud API key](https://console.bluemix.net/iam/#/apikeys) to login to IBM Cloud from CLI.
-1. Open Blue Ocean and create a new pipeline from GitHub repository:
-   - [Sample steps are described here](https://jenkins.io/doc/tutorials/create-a-pipeline-in-blue-ocean/#create-your-pipeline-project-in-blue-ocean)
+1. Open Blue Ocean and create a new pipeline from [Daytrader GitHub repository](https://github.com/samisalkosuo/sample.daytrader7):
+   - Sample steps to create a pipeline from GitHub repository is: [here](https://jenkins.io/doc/tutorials/create-a-pipeline-in-blue-ocean/#create-your-pipeline-project-in-blue-ocean)
    - When you've created the pipeline, build processes start for both develop and master branches.
    - Remember to set GitHub polling:
      - Select pipeline settings and Scan Repository Settings and set interval to 1 minute.
