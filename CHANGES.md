@@ -1,3 +1,7 @@
+## 0.7
+
+- Updated sample application and pipeline. Now has test-branch.
+
 ## 0.6
 
 - Updated scripts, CAM service, etc. to ICP 3.1.0.
