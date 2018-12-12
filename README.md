@@ -12,34 +12,39 @@ The guiding lights of this demo are:
 
 Both IBM Cloud Private (ICP) and IBM Cloud Automation Manager (CAM) used in this demo are publicly available Community Editions. When using licensed versions of ICP and CAM, their deployment is a bit different but mostly the same steps apply. 
 
-The steps below are written using ICP version is 2.1.0.3. Steps for ICP 3.1.0 should be the same but not yet tested. 
-
-Scripts, service and other files are updated for ICP/CAM 3.1.0. 
+The steps below, as well as scripts and other files are written using ICP version is 3.1.1 and CAM 3.1.0.
 
 ## Setup
 
 Assumption is that demo setup is created from scratch using Linux servers. 
 
-Demo servers are Ubuntu/CentOS Linux servers. total of 8 servers, and they are:
+<small>(Except... these instructions were written after uninstalling existing ICP 3.1.0 (that was upgraded from 2.1.0.3) environment so servers, Jenkins, NFS and others already existed.)</small>
+
+Demo servers are Ubuntu Linux servers, CentOS/RHEL could be used too. 
+
+Total of 8 servers, and they are:
 
 - ICP boot node, including:
   - Jenkins
   - Database
   - in real life, all of these would be separate servers but for demo purposes, this is fine
 - NFS server
-  - separate NFS server for ICP and CAM
-- 6 server for ICP
+  - to be used as storage for CAM and other workloads
+- 6 servers for ICP
   - master, management, proxy, 3 worker nodes
   - vulnerability advisor is not included in ICP Community Edition, but it would be useful in production environments
 - Minimum server requirements:
-  - Ubuntu or CentOS (others may work too)
+  - Ubuntu or RHEL/CentOS (others may work too)
     - Ubuntu is better choice, sample scripts in this repo are mostly for Ubuntu
-  - 4 CPU
+  - 8 CPU
   - 16GB RAM
   - 100GB disk
 
 In addition to servers, the following services are used:
 - IBM Cloud - IBM Cloud Object Storage
+  - Make note of [IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam/index.html#iamoverview).
+  - You may need to modify access rights. 
+  - If AWS deployment fails, step "Test deployment to AWS" in Jenkins should show errors related to access rights.
 - AWS EC2
 - GitHub
 - Slack
@@ -54,7 +59,9 @@ Starting from scratch, installing the demo environment is an effort. But outcome
 1. Use one of the servers as the ICP boot node.
    - This is also Jenkins server and simulates external database.
 
-1. [Setup IBM Cloud Private CE](https://www-03preprod.ibm.com/support/knowledgecenter/SSBS6K_2.1.0.3/installing/install_containers_CE.html).
+1. [Prepare servers, as needed](https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.1/installing/prep.html)
+
+1. [Install IBM Cloud Private CE](https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.1/installing/install_containers.html).
    - Setup nodes and install as instructed.
    - [hosts](icp/hosts) and [config.yaml](icp/config.yaml) are samples.
 
@@ -65,31 +72,36 @@ Starting from scratch, installing the demo environment is an effort. But outcome
 1. Setup NFS client on ICP nodes.
    - Make note to allow NFS traffic through firewall(s).
    - [Sample script to set up and test NFS client](scripts/nfs_client_setup.sh).
+   - Create NFS shared directory in all worker nodes.
+     - For example: ```/icp_shared```
 
-1. Install to ICP bootnode:
-   - IBM Cloud CLI installs:
-     - [kubectl](https://v1-10.docs.kubernetes.io/docs/tasks/tools/install-kubectl/)
-     - [Helm](https://github.com/kubernetes/helm/releases)
-     - [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
-     - Installation cmd: ```curl -sL https://ibm.biz/idt-installer | bash```
-   - [ICP CLI](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0.3/manage_cluster/install_cli.html)
-     - You need ICP installed before installing ICP CLI.
-     - Typical download URL: https://mycluster.icp:8443/api/cli/icp-linux-amd64.
-       - Sample cmd to download: ```curl -O -k https://mycluster.icp:8443/api/cli/icp-linux-amd64```
-     - Install ICP CLI: ```ibmcloud plugin install icp-linux-amd64```
+1. Install command line tools to ICP bootnode:
+   - ICP includes the required tools and they can be downloaded from ICP.
+   - CLI tools used:
+     - ```cloudctl```
+     - ```kubectl```
+     - ```helm```
+     - ```istioctl```
+     - ```calicoctl```
+   - The script [install_icp_cli.sh](scripts/install_icp_cli.sh) can be used to install CLI tools.
    - These tools are also used by Jenkins.
 
 1. Configure Docker private registry access from ICP boot node:
-   - install ICP certificate, [instructions here](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0.3/manage_images/configuring_docker_cli.html).
-   - Cert file is in master node and usually located here: ```/etc/docker/certs.d/mycluster.icp:8500/ca.crt```
+   - install ICP certificate, [instructions here](https://www.ibm.com/support/knowledgecenter/SSBS6K_3.1.1/manage_images/configuring_docker_cli.html).
+   - Cert file is in master node and usually located here:
+     - ```/etc/docker/certs.d/mycluster.icp:8500/ca.crt```
+
+1. Set up StorageClass for dynamic hostpath provisioning 
+   - Make sure that shared directory is in all worker nodes, for example: ```/icp_shared```
+   - My dynamic hostpath provisioner,which is based on other projects, is used here.
+     - https://github.com/samisalkosuo/k8s-dynamic-hostpath-provisioner
+     - Make note of limitations of using this kind of dynamic provisioning.
+   - Follow the instructions to set up a StorageClass.
 
 1. Install CAM Community Edition
-   - Create directories in NFS server. Sample script: [nfs_create_cam_dirs.sh](scripts/nfs_create_cam_dirs.sh).
-   - Login to ICP. [icp_login.sh](scripts/icp_login.sh).
-   - Create Persistent Volumes:
-     - Sample script: [create_cam_volumes.sh][cam/storage/create_cam_volumes.sh].
-   - [Install CAM-CE](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.3/cam_installing_CE_main.html).
-     - Please follow instructions.
+   - https://www.ibm.com/support/knowledgecenter/SS2L37_3.1.0.0/cam_install_CE.html
+   - Follow the instruction to install CAM.
+   - In order to use dynamic provisioning, when configuring Helm chart using ICP UI, remember to enable "Use Dynamic Provisioning".
      
 1. Install external database for Daytrader:
    - This simulates production database.
@@ -118,7 +130,7 @@ Now the basic components are installed: IBM Cloud Private, IBM Cloud Automation 
 
 ## Configure the demo environment
 
-Configuration includes setting up all the components so that automatic deploment happens when developer commits code. 
+Configuration includes setting up all the components so that automatic deployment happens when developer commits code. 
 
 ### GitHub
 
@@ -129,36 +141,35 @@ The sample application includes Jenkinsfile, Dockerfile and other configuration 
 ### Cloud Automation Manager
 
 1. Configure CAM:
-   - [Connect to AWS cloud](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.3/cam_managing_connections.html)
+   - [Connect to AWS cloud](https://www.ibm.com/support/knowledgecenter/SS2L37_3.1.0.0/cam_managing_connections.html)
      - Use connection name: ```AWSFrankfurt```
+     - Remember to select Frankfurt region.
    - You need AWS access key ID and secret access key.
 
 1. Create CAM template:
-   - [Documentation](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.3/cam_creating_template.html) includes steps to create template. It is can be straight-forward task.
+   - [Documentation](https://www.ibm.com/support/knowledgecenter/SS2L37_3.1.0.0/cam_managing_templates.html) includes steps to create template. It is quite straight-forward task.
    - Create template from GitHub.
    - GitHub Repository URL: ```https://github.com/samisalkosuo/icp-cam-devops-demo```
    - GitHub Repository sub-directory: ```cam/template```
    - Click "Create".
    - Display name: ```DaytraderAWS```
-   - Description: ```Daytrader application at AWS Frankfurt```
+   - Description: ```Daytrader application at AWS Frankfurt.```
    - Cloud provider: ```Amazon EC2```
    - Click "Save".
    
 1. Create CAM service:
    - CAM service can include many templates but, in this context, only the template created in previous step is used.
-   -  [Documentation](https://www.ibm.com/support/knowledgecenter/en/SS2L37_2.1.0.3/cam_managing_services.html) includes steps to create service. 
+   -  [Documentation](https://www.ibm.com/support/knowledgecenter/SS2L37_3.1.0.0/cam_managing_services.html) includes steps to create service. 
+   - Use "Create a Service" to create new service.
    - You must use service name: ```DaytraderAtFrankfurt```
      - Because this is hardcoded in Daytrader Jenkins build :-)
    - Import [service JSON file](cam/service/daytrader_at_frankfurt.json) as source.
-   - Add service parameter:
-     - parameter key: *app_download_url*
-   - Add template parameters:
-     - app_download_url = ${parameters.app_download_url}
-     - aws_access_key = YOUR_AWS_ACCESS_KEY
-     - aws_secret_key = YOUR_AWS_SECRET_ACCESS_KEY
-   - Click "Save" and "Publish".
+   - Edit template parameters (in Parameters-tab, under "Activity Parameters"):
+     - replace *ADD YOUR AWS ACCESS KEY HERE* with your own AWS access key.
+     - replace *ADD YOUR AWS SECRET ACCESS KEY HERE* with your own AWS secret access key.
+   - Click "Save" and then click "Publish".
 
-You may test template and service from CAM UI. You need to have application URL...
+You may test template and service from CAM UI, but in order it to work correctly you need to have an application URL where to download Docker image. It's better to follow these instructions to the end :-)
 
 ### Jenkins
 
@@ -176,6 +187,10 @@ You may test template and service from CAM UI. You need to have application URL.
    - CAM_PASSWORD - password for CAM and ICP (assumes that admin-user can access both)
    - DAYTRADER_DB_IP - IP address where Daytrader external database is running. Must be accessible from ICP worker nodes.
    - IBMCLOUD_API_KEY - [IBM Cloud API key](https://console.bluemix.net/iam/#/apikeys) to login to IBM Cloud from CLI.
+     - Reminder:
+       - Make note of [IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam/index.html#iamoverview).
+       - You may need to modify access rights. 
+
 1. Open Blue Ocean and create a new pipeline from [Daytrader GitHub repository](https://github.com/samisalkosuo/sample.daytrader7):
    - Sample steps to create a pipeline from GitHub repository is: [here](https://jenkins.io/doc/tutorials/create-a-pipeline-in-blue-ocean/#create-your-pipeline-project-in-blue-ocean)
    - When you've created the pipeline, build processes start for both develop and master branches.
