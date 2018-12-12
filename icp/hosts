@@ -1,15 +1,16 @@
 [master]
-MASTER_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
+10.9.8.2 kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
 
 [worker]
-WORKER_1_IP
-WORKER_2_IP
+10.9.8.3
+10.9.8.4
+10.9.8.5
 
 [proxy]
-PROXY_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
+10.9.8.6 kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
 
 [management]
-MGMT_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
+10.9.8.7 kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
 
-[va]
-VA_IP kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
+#[va]
+#10.9.8.8 kubelet_extra_args='["--eviction-hard=memory.available<100Mi,nodefs.available<2Gi,nodefs.inodesFree<5%", "--image-gc-high-threshold=100%", "--image-gc-low-threshold=100%"]'
