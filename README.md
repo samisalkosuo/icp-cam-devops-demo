@@ -191,6 +191,13 @@ You may test template and service from CAM UI, but in order it to work correctly
        - Make note of [IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam/index.html#iamoverview).
        - You may need to modify access rights. 
 
+1. This demo uses Jenkins server to build code (no slaves). By default, ICP is installed using self-signed certificates and helm uses certificates installed in host OS. This is the case in Ubuntu.
+   - cloudctl sets up the ICP certificate.
+   - But Ubuntu validates also issuer certificate.
+   - Issuer certificate is found in boot-node directory: ```<ICP_INSTALL_DIR>/cluster/cfc-certs/root-ca/ca.crt```.
+   - Copy ```ca.crt``` to ```/usr/local/share/ca-certificates/```.
+   - Update certificates: ```update-ca-certificates```.
+
 1. Open Blue Ocean and create a new pipeline from [Daytrader GitHub repository](https://github.com/samisalkosuo/sample.daytrader7):
    - Sample steps to create a pipeline from GitHub repository is: [here](https://jenkins.io/doc/tutorials/create-a-pipeline-in-blue-ocean/#create-your-pipeline-project-in-blue-ocean)
    - When you've created the pipeline, build processes start for both develop and master branches.
