@@ -1,3 +1,9 @@
+## 0.8
+
+- Using now ICP-CE 3.1.1.
+- Updated instructions.
+- Demo uses dynamic hostpath provisioning.
+
 ## 0.7
 
 - Updated sample application and pipeline. Now has test-branch.
