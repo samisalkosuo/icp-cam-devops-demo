@@ -183,14 +183,23 @@ You may test template and service from CAM UI, but in order it to work correctly
    - ICP_URL - URL to ICP admin console (like https://server.ip:8843).
    - CAM_URL - CAM URL. Default URL is like https://proxy.server.ip:30000.
    - ICP_PROXY_IP - ICP proxy node IP address.
-   - CAM_USER - admin user name for both CAM and ICP (default is typically 'admin')
-   - CAM_PASSWORD - password for CAM and ICP (assumes that admin-user can access both)
    - DAYTRADER_DB_IP - IP address where Daytrader external database is running. Must be accessible from ICP worker nodes.
    - IBMCLOUD_API_KEY - [IBM Cloud API key](https://console.bluemix.net/iam/#/apikeys) to login to IBM Cloud from CLI.
      - Reminder:
        - Make note of [IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam/index.html#iamoverview).
        - You may need to modify access rights. 
-
+1. Add credentials to Jenkins for ICP and CAM users:
+   - See here https://jenkins.io/doc/book/using/using-credentials/#configuring-credentials and here https://jenkins.io/doc/book/pipeline/jenkinsfile/#handling-credentials.
+   - ICP admin user credentials:
+     - Kind: Username with password.
+     - ID: ```icp-admin-user-creds```.
+   - CAM user credentials
+     - Kind: Username with password.
+     - ID: ```cam-user-creds```.
+   - IBM Cloud API key
+     - Kind: Secret text.
+     - ID: ```ibm-cloud-api-key```.
+   - These credentials are used in Daytrader7 Jenkinsfile.
 1. This demo uses Jenkins server to build code (no slaves). By default, ICP is installed using self-signed certificates and helm uses certificates installed in host OS. This is the case in Ubuntu.
    - cloudctl sets up the ICP certificate.
    - But Ubuntu validates also issuer certificate.
